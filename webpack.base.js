@@ -34,15 +34,7 @@ Glob.sync('./src/pages/*/index.js').forEach(filePath => {
       template: path.resolve(__dirname, `./src/pages/${name}/index.html`),
       chunks: chunks,
       chunksSortMode: 'manual',
-      minify: isProd ? {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true,
-        minifyJS: true
-      } : false
+      minify: false
     })
   )
 })
@@ -82,13 +74,36 @@ module.exports = {
                   type: 'src'
                 }
               ]
-            }
+            },
+            minimize: isProd ? {
+              collapseWhitespace: true,
+              conservativeCollapse: true,
+              keepClosingSlash: true,
+              minifyCSS: true,
+              minifyJS: true,
+              removeAttributeQuotes: false,
+              removeComments: true,
+              removeScriptTypeAttributes: true,
+              removeStyleTypeAttributes: true,
+              useShortDoctype: true
+            } : false
           }
         }
       },
       {
         test: /\.(png|jpg|jpe?g|gif)$/,
-        use: ['url-loader?limit=4096&name=[name]' + (isProd ? '.[hash:8]' : '') + '.[ext]&outputPath=img/', 'image-webpack-loader']
+        include: path.resolve(__dirname, './src/assets/img/'),
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096,
+              name: '[name]' + (isProd ? '.[hash:8]' : '') + '.[ext]',
+              outputPath: 'img/'
+            }
+          },
+          'image-webpack-loader'
+        ]
       },
       {
         test: /\.(webp)$/,

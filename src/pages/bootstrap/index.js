@@ -1,4 +1,7 @@
 import 'bootstrap'
-import './index.scss'
 import '../../assets/style/carousel.css'
+import './index.scss'
 
+$('#alert').on('click', () => {
+  alert('jQuery works!')
+})
