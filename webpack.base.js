@@ -110,7 +110,7 @@ module.exports = {
         use: ['file-loader?&name=[name]' + (isProd ? '.[hash:8]' : '') + '.[ext]&outputPath=img/']
       },
       {
-        test: /\.(svg|woff|woff2|ttf|eot)(\?.*$|$)/,
+        test: /\.(svg|ico|woff|woff2|ttf|eot)(\?.*$|$)/,
         loader: 'file-loader?name=font/[name].[hash:8].[ext]'
       },
       {
